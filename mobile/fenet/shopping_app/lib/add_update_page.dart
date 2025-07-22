@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
 
-class AddUpdatePage extends StatelessWidget {
-  final bool isEdit;
+class AddUpdatePage extends StatefulWidget {
+  final Map<String, dynamic>? product;
 
-  const AddUpdatePage({super.key, this.isEdit = false});
+  const AddUpdatePage({super.key, this.product});
+
+  @override
+  State<AddUpdatePage> createState() => _AddUpdatePageState();
+}
+
+class _AddUpdatePageState extends State<AddUpdatePage> {
+  late TextEditingController nameController;
+  late TextEditingController categoryController;
+  late TextEditingController priceController;
+  late TextEditingController descriptionController;
+
+  bool get isEdit => widget.product != null;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(text: widget.product?["name"] ?? "");
+    categoryController = TextEditingController(text: widget.product?["category"] ?? "");
+    priceController = TextEditingController(
+        text: widget.product?["price"] != null
+            ? widget.product!["price"].toString()
+            : "");
+    descriptionController = TextEditingController(text: widget.product?["description"] ?? "");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +48,12 @@ class AddUpdatePage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: Icon(Icons.chevron_left, size: 28, color: Colors.blue ),
+                    child: Icon(Icons.chevron_left, size: 28, color: Colors.blue),
                   ),
                   Expanded(
                     child: Center(
                       child: Text(
-                        isEdit ? 'Update Product' : 'Add  Product',
+                        isEdit ? 'Update Product' : 'Add Product',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -37,10 +61,7 @@ class AddUpdatePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Opacity(
-                    opacity: 0,
-                    child: Icon(Icons.chevron_left),
-                  ),
+                  Opacity(opacity: 0, child: Icon(Icons.chevron_left)),
                 ],
               ),
               SizedBox(height: 20),
@@ -64,17 +85,28 @@ class AddUpdatePage extends StatelessWidget {
               ),
               SizedBox(height: 20),
 
-              _buildLabeledField("name"),
+              _buildLabeledField("name", controller: nameController),
               SizedBox(height: 12),
-              _buildLabeledField("category"),
+              _buildLabeledField("category", controller: categoryController),
               SizedBox(height: 12),
-              _buildLabeledField("price", suffix: Icon(Icons.attach_money)),
+              _buildLabeledField(
+                "price",
+                controller: priceController,
+                suffix: Icon(Icons.attach_money),
+              ),
               SizedBox(height: 12),
-              _buildLabeledField("description", isMultiline: true),
-
+              _buildLabeledField(
+                "description",
+                controller: descriptionController,
+                isMultiline: true,
+              ),
               SizedBox(height: 20),
+
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  print("Added: ${nameController.text}");
+                  Navigator.pop(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   padding: EdgeInsets.symmetric(vertical: 14),
@@ -85,8 +117,12 @@ class AddUpdatePage extends StatelessWidget {
                 child: Text("ADD", style: TextStyle(color: Colors.white)),
               ),
               SizedBox(height: 10),
+
               OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  print("Updated: ${nameController.text}");
+                  Navigator.pop(context);
+                },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.red,
                   side: BorderSide(color: Colors.red),
@@ -95,7 +131,7 @@ class AddUpdatePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
-                child: Text("DELETE"),
+                child: Text("UPDATE"),
               ),
             ],
           ),
@@ -104,7 +140,12 @@ class AddUpdatePage extends StatelessWidget {
     );
   }
 
-  Widget _buildLabeledField(String label, {bool isMultiline = false, Widget? suffix}) {
+  Widget _buildLabeledField(
+    String label, {
+    bool isMultiline = false,
+    Widget? suffix,
+    required TextEditingController controller,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -116,6 +157,7 @@ class AddUpdatePage extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
           ),
           child: TextField(
+            controller: controller,
             maxLines: isMultiline ? 4 : 1,
             decoration: InputDecoration(
               border: InputBorder.none,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'details_page.dart';
-import 'add_update_page.dart';
-import 'search_page.dart';
+
 
 class HomePage extends StatelessWidget {
   final List<Map<String, dynamic>> products = [
@@ -82,7 +80,7 @@ class HomePage extends StatelessWidget {
                   Text("Available Products", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=> SearchPage(products: products)),);
+                      Navigator.pushNamed(context, '/search', arguments: products);
                     },
                     child: Container(
                       padding: EdgeInsets.all(6),
@@ -103,10 +101,7 @@ class HomePage extends StatelessWidget {
                     final p =products[index];
                     return GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (_)=>DetailsPage(product:p)),
-                        );
+                        Navigator.pushNamed(context, '/details',arguments: p);
                       },
                       child: Container(
                         margin: EdgeInsets.only(bottom: 16),
@@ -182,7 +177,7 @@ class HomePage extends StatelessWidget {
           child: Icon(Icons.add, color: Colors.white),
         ),
         onPressed: () {
-          Navigator.push(context,MaterialPageRoute(builder: (_)=> AddUpdatePage()),);
+          Navigator.pushNamed(context, '/add_update');
         },
       ),
     );

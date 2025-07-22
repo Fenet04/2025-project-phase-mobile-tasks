@@ -144,6 +144,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
+                            Navigator.pushNamed(context,'/add_update',arguments: widget.product);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
