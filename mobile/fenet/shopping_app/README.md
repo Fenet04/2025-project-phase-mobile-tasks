@@ -16,7 +16,7 @@ while the app does not fully implement backend features like adding, updating, o
 - ✅ **Navigation Animations**: slide animation added for page transitions.
 - ✅ **Back Navigation**: All pages handle the back button correctlyto go back to the home page.
 
-##How to run the app
+## How to run the app
 1. Clone the repository:
 ```bash
 git clone https://github.com/Fenet04/2025-project-phase-mobile-tasks.git
