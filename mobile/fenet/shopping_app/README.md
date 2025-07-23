@@ -6,8 +6,8 @@ This is a simple eCommerce mobile app built with Flutter as part of Task 7 for t
 while the app does not fully implement backend features like adding, updating, or deleting actual data, it includes:
 - A **Home Page** that shows a list of products.
 - A **Details Page** that shows product details and size options when you click on a product.
--An **Add/Update Page** with a form UI for adding or updating a product.
--A **Search Page** with filtering by name, category, and price.
+- An **Add/Update Page** with a form UI for adding or updating a product.
+- A **Search Page** with filtering by name, category, and price.
 
 ## Naviagtion Features Implemented
 - ✅ **Screen Navigation**: You can navigate between Home, Search, Add/Update, and Details pages.
