@@ -1,11 +1,11 @@
-import '../entities/product.dart';
+import '../repositories/product_repository.dart';
 
 class DeleteProductUsecase {
-  final List<Product> products;
+  final ProductRepository repository;
 
-  DeleteProductUsecase(this.products);
+  DeleteProductUsecase(this.repository);
 
   Future<void> call(String id) async {
-    products.removeWhere((product) => product.id == id);
+    await repository.deleteProduct(id);
   }
 }

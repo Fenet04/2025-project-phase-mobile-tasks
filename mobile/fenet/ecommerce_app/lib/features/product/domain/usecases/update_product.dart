@@ -1,14 +1,12 @@
 import '../entities/product.dart';
+import '../repositories/product_repository.dart';
 
 class UpdateProductUsecase {
-  final List<Product> products;
+  final ProductRepository repository;
 
-  UpdateProductUsecase(this.products);
+  UpdateProductUsecase(this.repository);
 
   Future<void> call(Product product) async {
-    final index = products.indexWhere((p) => p.id == product.id);
-    if (index != -1) {
-      products[index] = product;
-    }
+    await repository.updateProduct(product);
   }
 }

@@ -1,11 +1,12 @@
 import '../entities/product.dart';
+import '../repositories/product_repository.dart';
 
 class ViewAllProductsUsecase {
-  final List<Product> products;
+  final ProductRepository repository;
 
-  ViewAllProductsUsecase(this.products);
-  
+  ViewAllProductsUsecase(this.repository);
+
   Future<List<Product>> call() async {
-    return products;
+    return await repository.getAllProducts();
   }
 }

@@ -1,15 +1,12 @@
 import '../entities/product.dart';
+import '../repositories/product_repository.dart';
 
 class ViewProductUsecase{
-  final List<Product> products;
+  final ProductRepository repository;
 
-  ViewProductUsecase(this.products);
+  ViewProductUsecase(this.repository);
 
   Future<Product?> call(String id) async {
-    try {
-      return products.firstWhere((product) => product.id == id);
-    } catch (_) {
-      return null;
-    }
+    return await repository.getProduct(id);
   }
 }
