@@ -13,7 +13,7 @@ abstract class AuthRemoteDataSource {
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final http.Client client;
-  static const baseUrl = 'https://g5-flutter-learning-path-be-tvum.onrender.com/api/v1';
+  static const baseUrl = 'https://g5-flutter-learning-path-be-tvum.onrender.com/api/v2';
 
   AuthRemoteDataSourceImpl(this.client);
 
