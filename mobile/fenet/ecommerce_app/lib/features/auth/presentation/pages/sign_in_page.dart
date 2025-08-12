@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../chat/presentation/pages/chat_list_page.dart';
+import '../../data/datasources/auth_local_data_source.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
@@ -18,7 +21,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is AuthLoading) {
           showDialog(
             context: context,
@@ -36,6 +39,19 @@ class _SignInPageState extends State<SignInPage> {
         } else if (state is AuthTokenSaved) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Login successful")),
+          );
+          final prefs = await SharedPreferences.getInstance();
+          final localDataSource = AuthLocalDataSourceImpl(prefs);
+
+          final token = await localDataSource.getCachedToken();
+
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (_) => ChatListScreen(
+                tokenProvider: () => token ?? '',
+              ),
+            ),
+            (_) => false,
           );
         }
       },
